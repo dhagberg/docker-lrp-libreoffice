@@ -1,0 +1,41 @@
+#!/bin/bash
+set -xe
+cd /root/build
+
+# libreoffice-base depends on postgresql-jdbc but *NOT* from a pgdg repo.
+DISREPO_ARGS=$(awk '/\[local-pgdg.*/{print $1}' /etc/yum.repos.d/*.repo | \
+ sed -e 's,\[,,' -e 's,\],,' -e 's,^,--disablerepo=,')
+
+# When installing rpms with java dependencies, need to exclude JDKs we don't want
+EXCLUDE_ARGS="--exclude=jdk --exclude=java-*-compat --exclude=java-*-oracle"
+
+# But first, postgresql-jdbc depends on a JDK being installed and we want to use 1.8.0-openjdk
+yum -y $EXCLUDE_ARGS $DISREPO_ARGS install java-1.8.0-openjdk
+yum -y $EXCLUDE_ARGS $DISREPO_ARGS install postgresql-jdbc.noarch
+
+PKGS="
+java-1.8.0-openjdk-devel
+libreoffice-calc
+libreoffice-pdfimport
+libreoffice-emailmerge
+libreoffice-headless
+libreoffice-ure
+libreoffice-core
+libreoffice-base
+libreoffice-draw
+libreoffice-impress
+libreoffice-pyuno
+libreoffice
+libreoffice-opensymbol-fonts
+libreoffice-writer
+libreoffice-graphicfilter
+libreoffice-math
+"
+yum -y $EXCLUDE_ARGS $DISREPO_ARGS install $PKGS
+
+yum -y clean all
+
+# output some status info
+OOO_HOME=/usr/lib64/libreoffice/program
+export PATH=$OOO_HOME:$PATH
+$OOO_HOME/soffice.bin --headless --nologo --nofirststartwizard --version
