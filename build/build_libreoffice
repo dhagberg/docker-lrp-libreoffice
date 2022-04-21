@@ -6,14 +6,14 @@ cd /root/build
 DISREPO_ARGS="--disablerepo=pgdg10"
 
 # When installing rpms with java dependencies, need to exclude JDKs we don't want
-EXCLUDE_ARGS="--exclude=jdk --exclude=java-*-compat --exclude=java-*-oracle"
+EXCLUDE_ARGS="--exclude=jdk --exclude=java-*-compat --exclude=java-*-oracle* --exclude=java-*-openjdk*"
 
 # But first, postgresql-jdbc depends on a JDK being installed and we want to use 1.8.0-openjdk
-yum -y $EXCLUDE_ARGS $DISREPO_ARGS install java-1.8.0-openjdk
+yum -y $EXCLUDE_ARGS $DISREPO_ARGS install zulu8-jdk
 yum -y $EXCLUDE_ARGS $DISREPO_ARGS install postgresql-jdbc.noarch
 
 PKGS="
-java-1.8.0-openjdk-devel
+zulu8-jdk-devel
 libreoffice-calc
 libreoffice-pdfimport
 libreoffice-emailmerge
