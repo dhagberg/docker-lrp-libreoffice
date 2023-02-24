@@ -3,7 +3,7 @@ set -xe
 cd /root/build
 
 # libreoffice-base depends on postgresql-jdbc but *NOT* from a pgdg repo.
-DISREPO_ARGS="--disablerepo=pgdg10"
+DISREPO_ARGS="--disablerepo=pgdg*"
 
 # When installing rpms with java dependencies, need to exclude JDKs we don't want
 EXCLUDE_ARGS="--exclude=jdk --exclude=java-*-compat --exclude=java-*-oracle* --exclude=java-*-openjdk*"
