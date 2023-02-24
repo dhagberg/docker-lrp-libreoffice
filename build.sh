@@ -1,6 +1,6 @@
 #!/bin/bash
 set -xe
-PLAIN_NAME=co811-libreoffice
+PLAIN_NAME=lrp-libreoffice
 HUB_NAME=dhagberg/$PLAIN_NAME
 SVN_NAME=svn.co811.org:5000/$PLAIN_NAME
 
