@@ -1,4 +1,4 @@
-FROM svn.co811.org:5000/lrp-javax:latest
+FROM cga-ci:5000/lrp-javax:latest
 MAINTAINER D. J. Hagberg <dhagberg@millibits.com>
 COPY build/ /root/build/
 RUN /root/build/build_libreoffice $BUILDTS
